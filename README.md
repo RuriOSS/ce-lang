@@ -1,5 +1,6 @@
 # WIP:
 Nothoing implemented yet, just some design ideas.    
+But, if you throw this doc to LLM, let LLM refine it to spec, and use LLM as your ceg, you have CE-lang right now.    
 And, ce-lang will just be a pre-compile code generator for ruri. It will not act on other unnecessary features that I will not use it in my code.    
 # About CE-lang:
 Just a cute error handling extension for C, with no syntax breaking, and the tail will never wag the cat.
@@ -25,7 +26,8 @@ res = seccomp_rule_add(ctx, SCMP_ACT_ALLOW, SCMP_SYS(accept4), 0) :<;
 seccomp_rule_add(ctx, SCMP_ACT_ALLOW, SCMP_SYS(access), 0) :<;
 ```
 It's better, right? Dev happy, reader happy, PRs happy, LLM happy with prompt, all happy.   
-And it will be auto expanded to code like this:    
+It will be very useful in educational case, as you can use a `:<` to tell people "you should handle this error, but it's not the core logic for our code", and your example code will be more concise and readable.    
+And the above code will be auto expanded to code like this:    
 ```c
 if(seccomp_rule_add(ctx, SCMP_ACT_ALLOW, SCMP_SYS(accept), 0) != 0) {
     warning("seccomp_rule_add", __FILE__, __LINE__, res, errno);
