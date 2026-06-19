@@ -32,5 +32,6 @@ if(seccomp_rule_add(ctx, SCMP_ACT_ALLOW, SCMP_SYS(accept), 0) != 0) {
 ```
 So that's CE lang, C with better Error handling/Cute Error handling.    
 The tail will never wag the cat.    
-So ce-lang will never break c syntax, except the old `:>` as `]` design. But as ce will translate .ce to c, and if you only use `:>` as happy face in .ce, that's fine.    
+So ce-lang will never break c syntax, except the old `:>` as `]` design.   
+But as ce will translate .ce to c, and if you only use `:>` as happy face in .ce, that's fine.    
 In one word, CE-lang makes a zipped error handling in C, and it's kawaii.      
