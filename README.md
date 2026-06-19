@@ -3,8 +3,8 @@ Nothoing implemented yet, just some design ideas.
 But, if you throw this doc to LLM, let LLM refine it to spec, and use LLM as your ceg, you have CE-lang right now.    
 And, ce-lang will just be a pre-compile code generator for ruri. It will not act on other unnecessary features that I will not use it in my code.    
 # About CE-lang:
-Just a cute error handling extension for C, with no syntax breaking, and the tail will never wag the cat.
-We will just have a new happy face `:>` for default handling, and a sad face `:<` for error handling, and `#[[ce_foo()]]` for code generation.     
+Just a cute error handling extension for C, with no syntax breaking, and the tail will never wag the cat.    
+We will just have a new happy face `:>` for default handling, and a sad face `:<` for error handling, and `#[[ce_foo()]]` for code generation.      
 These syntax will be translated to C code, you can use CE-lang for error handling, CE-generator transform it to C, and you compile/run/debug the generated C code.      
 # Why CE-lang:
 In ruri:      
