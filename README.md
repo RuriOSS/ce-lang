@@ -29,6 +29,7 @@ The tail should never wag the cat also means `tail` command should not call `|ca
   - Always make a backup to last working code.
   - Always backup ceg itself.
   - Always check where's your cat.
+  - If cwte wrote the wrong code, the dev should scream.
   - Cwte should NEVER be a compile-time dependency for released code.
   - Never assume anything, your cat's tail can make your cook fail.    
 
