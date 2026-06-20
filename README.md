@@ -33,6 +33,17 @@ The tail should never wag the cat also means `tail` command should not call `|ca
   - Cwte should NEVER be a compile-time dependency for released code.
   - Never assume anything, your cat's tail can make your cook fail.    
 
+# Project scructure:
+A cwte project should be like:
+```
+project
+├── src // For C code, the ONLY code for testing and publishing.
+│   └── foo.c // The ONLY code as true source code, for testing and publishing.
+└── srce // For cwte code, only TEMPORARY code for developing.
+    ├── foo.ce // Cwte code. For reading and developing.
+    └── foo.hce // Cwte defination, for registering func type and handler.
+```
+
 # Why cwte:
 In ruri:      
 ```c
