@@ -13,11 +13,14 @@ Just a cute error handling extension for C.
 With no syntax breaking, and the tail will never wag the cat.    
 We will just have a new happy face `:>` for default handling, and a sad face `:<` for error handling, and `#[[ce_foo()]]` for code generation.      
 These syntax will be translated to C code, you can use cwte for error handling, cwte-generator transform it to C, and you compile/run/debug the generated C code.      
+In short, cwte is just for zipping complex unhappy path logic, and make it more readable.    
 # The core:
 `:<` Is the only core feature, it's a tail after func call, for error handling.     
 The tail should never wag the cat, this means sad path handler should never pollute the core logic, and ce will also never pollute other c code.     
 The tail should never wag the cat also means `tail` command should not call `|cat` lol   
 # The philosophy:
+- Cwte has no super cow powers.    
+- Cwte is a postfix, a tail, but not the cat (C-lang).    
 - The tail can/should/will/must never wag the cat.
 - Cwte should be reversible, if you don't like, thow it away and fallback to c.
 - We are c users, not cwte users.    
@@ -118,14 +121,9 @@ int fd_4 = open("file4.txt", O_RDONLY) :<
 int fd_5 = open("file5.txt", O_RDONLY) :>;
 ```
 
-# Note:
-cwte has no super cow powers.    
-cwte is a postfix, a tail, but not the cat (C-lang).    
-The tail will never wag the cat.    
-cwte is just for zipping complex unhappy path logic, and make it more readable.    
+# Note:  
 cwte just implements `:<` and `:>`, `and #[[ce_foo()]]`, the rest is just C code, and every cwte feature will be translated to C code, You debug/run the generated C code, not the cwte code.   
-#[[ce_reg()]] is enforced, or ce will not know how to handle the error.      
-In one word, cwte is like yet another C-style .unwrap().    
+#[[ce_reg()]] is enforced, or ce will not know how to handle the error.        
 And, there will be many ubs, so always do a diff-check between .ce and .c, and make sure the generated code is what you want.    
 You can use _CE_DFT for `:>` and _CE_PAN for `:<`, just recover with one `sed`, so your IDE and clang-format will not scream at it. But for `foo() :<, :>`, your IDE will scream anyway, although these code are less in real-world case.    
 Cwte should be used step-by-step, and always check the generated code to make sure it's what you want. If it will be more ugly, immediately make a ctrl-z in your ide and fallback to the c way, we should never let the tail wag the cat.    
@@ -136,8 +134,8 @@ Maybe we can have a `#[[ce_enforce(func)]]` to enforce you catch result for func
 Maybe one day it can be C-Evolved, but at least these ideas shows that c is extensible, and ce is also.    
 # Ascii logo:
 ```
-          _.-'''-._
-        .'         `. 
+         _-''''-._
+       /`          `. 
       /   .'~~~,     \ 
      |   /       \    |    
      |   |   :>.,/    |
