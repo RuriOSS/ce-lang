@@ -24,7 +24,7 @@ The tail should never wag the cat also means `tail` command should not call `|ca
 - The tail can/should/will/must never wag the cat.
 - Cwte should be reversible, if you don't like, thow it away and fallback to c.
 - We are c users, not cwte users.    
-- Cwte is dangerous, the tail can bomb everything, so:
+- Cwte is dangerous, the tail can make everything cooked, so:
   - Always check the generated code.
   - Always make a backup to last working code.
   - Always backup ceg itself.
