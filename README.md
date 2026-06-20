@@ -39,6 +39,11 @@ The tail will never wag the cat.
 So ce-mark will never break c syntax, except the old `:>` as `]` design.   
 But as ce will translate .ce to c, and if you only use `:>` as happy face in .ce, that's fine.    
 In one word, ce-mark makes a zipped error handling in C, and it's kawaii.      
+# Why we choose `:<`:
+- Cute and readable, it's like a sad face, and it zips the error handling logic, and make the code more concise and readable.    
+- Zero syntax breaking, :< never affects C grammar.    
+- Explicit invalid-stat marker, if you leave a `:<`, `:>` or `]` after a function, your compiler will definitely scream.    
+- Enforced pre-compile code generation and error handling, `:<` is not a todo comment, but it's easier to be done. With LLM or ceg.    
 # The .hce header:
 .hce stands for `happy c ending/handle c error`, it's just a kv-map to register error expr and handler for funcs. maybe we can also have standard hce conf like posix.hce.      
 ```c
