@@ -1,4 +1,4 @@
-CE-lang Specification (Draft)
+CWTE Specification (Draft)
 
 Version: 0.0 (WIP)
 
@@ -8,13 +8,13 @@ Status: Experimental
 
 1. Overview
 
-CE-lang (Cute Error / Compact Error Language) is a minimal, source-to-source extension for C.
+CWTE (Cute Error / Compact Error Language) is a minimal, source-to-source extension for C.
 
-CE-lang introduces a small amount of syntax for expressing error-handling intent while preserving the semantics and execution model of C.
+CWTE introduces a small amount of syntax for expressing error-handling intent while preserving the semantics and execution model of C.
 
-A CE-lang compiler translates ".ce" files into ordinary ".c" files. The generated C source is the canonical compilation target.
+A CWTE compiler translates ".ce" files into ordinary ".c" files. The generated C source is the canonical compilation target.
 
-CE-lang does not define a new runtime, ABI, object model, type system, or execution semantics.
+CWTE does not define a new runtime, ABI, object model, type system, or execution semantics.
 
 Its sole purpose is to reduce boilerplate around non-core error handling paths.
 
@@ -24,11 +24,11 @@ Its sole purpose is to reduce boilerplate around non-core error handling paths.
 
 2.1 The tail shall never wag the cat.
 
-CE-lang exists to serve C.
+CWTE exists to serve C.
 
 C remains the source of truth.
 
-CE-lang must not:
+CWTE must not:
 
 - redefine the C execution model;
 - alter ABI behavior;
@@ -44,7 +44,7 @@ Users compile, debug, profile, and deploy the generated C code.
 
 2.2 Minimal syntax surface
 
-CE-lang only introduces:
+CWTE only introduces:
 
 - ":<"
 - ":>"
@@ -56,7 +56,7 @@ No other syntax extensions are defined.
 
 2.3 Explicit error knowledge
 
-CE-lang SHALL NOT infer failure conditions.
+CWTE SHALL NOT infer failure conditions.
 
 Functions participating in CE error handling MUST be registered via "ce_reg".
 
@@ -90,7 +90,7 @@ No modifications to existing C compilers are required.
 
 4. Error Registration
 
-CE-lang requires explicit declaration of:
+CWTE requires explicit declaration of:
 
 - return type,
 - failure condition.
@@ -390,25 +390,25 @@ and
 
 before deployment.
 
-CE-lang intentionally exposes its translation output.
+CWTE intentionally exposes its translation output.
 
 ---
 
 12. Undefined and Implementation-Defined Behavior
 
-CE-lang does not eliminate C undefined behavior.
+CWTE does not eliminate C undefined behavior.
 
 The generator may introduce implementation-defined behavior in edge cases.
 
 Users remain responsible for validating generated output.
 
-CE-lang provides convenience, not safety guarantees.
+CWTE provides convenience, not safety guarantees.
 
 ---
 
 13. Non-Goals
 
-CE-lang SHALL NOT provide:
+CWTE SHALL NOT provide:
 
 - exceptions;
 - stack unwinding;
@@ -422,17 +422,17 @@ CE-lang SHALL NOT provide:
 - automatic error propagation;
 - replacement of C compilers.
 
-CE-lang is not a safer C.
+CWTE is not a safer C.
 
-CE-lang is not a new programming language.
+CWTE is not a new programming language.
 
-CE-lang is merely a compact notation for expressing error-handling intent.
+CWTE is merely a compact notation for expressing error-handling intent.
 
 ---
 
 14. Philosophy
 
-CE-lang makes unhappy paths smaller.
+CWTE makes unhappy paths smaller.
 
 It does not make C disappear.
 
