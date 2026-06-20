@@ -1,6 +1,7 @@
 # WIP:
 Nothoing implemented yet, just some design ideas.    
 But, if you throw this doc to LLM, let LLM refine it to spec, and use LLM as your ceg, you have ce-mark right now.    
+"I'm a lazy dev, and I used :< sad face to mark the code that mignt fail, as my assistant, you should implement the :< mark as error handling logic for these code".   
 And, the real ce-generator will just be a pre-compile code generator for ruri. It will not act on other unnecessary features that I will not use it in my code.    
 # About ce-mark:
 Just a cute error handling extension for C, with no syntax breaking, and the tail will never wag the cat.    
