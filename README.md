@@ -7,6 +7,11 @@ And, the real ce-generator will just be a pre-compile code generator for ruri. I
 Just a cute error handling extension for C, with no syntax breaking, and the tail will never wag the cat.    
 We will just have a new happy face `:>` for default handling, and a sad face `:<` for error handling, and `#[[ce_foo()]]` for code generation.      
 These syntax will be translated to C code, you can use ce-mark for error handling, CE-generator transform it to C, and you compile/run/debug the generated C code.      
+# The core:
+`:<` Is the only core feature, it's a tail after func call, for error handling.     
+The tail should never wag the cat, this means sad path handler should never pollute the core logic, and ce will also never pollute other c code.     
+~~The tail should never wag the cat also means `tail` command should not call `|cat` lol~~   
+
 # Why ce-mark:
 In ruri:      
 ```c
