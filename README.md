@@ -4,6 +4,7 @@
 
 But, if you throw this doc to LLM, let LLM refine it to spec, and use LLM as your ceg, you have cwte right now.    
 "I'm a lazy dev, and I used :< sad face to mark the code that mignt fail, as my assistant, you should implement the :< mark as error handling logic for these code".   
+Or just fork this repo, and implement yourself, cwte and `:<` shouldn't be my own patent, and I have no time on it, I just want to have an ice cream.     
 And, the real cwte-generator will just be a pre-compile code generator for ruri. It will not act on other unnecessary features that I will not use it in my code.     
 # Version:
 0.0, just a draft, not a spec or implementation yet.     
