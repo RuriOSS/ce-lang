@@ -27,6 +27,7 @@ Cwte tail at test.ce line 10:
 ```
 
 # About cwte:
+"Let's zip the tail, and now we have fuwafuwa cat".   
 Cwte(cute) stands for "C with tailed error-handler/Cute way to handle error/~~cry to error~~", it's a cute and concise error handling extension for C, with zero syntax breaking, and the tail will never wag the cat.     
 Just a cute error handling extension for C.    
 With no syntax breaking, and the tail will never wag the cat.    

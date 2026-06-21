@@ -1,8 +1,13 @@
+/*
+ * Now I scream. WTH is this QwQ?
+ * Don't blame me QwQ, all rust code is written by LLMs,
+ * and I have never learned rust in fact.
+ */
 use std::env;
 use std::fs;
 use std::io::Write;
 // Print a nautilus with file name, line number and content.
-// This is a TODO note.
+// The `::}` is a cwte TODO note.
 fn print_nautilus(file: &str, line_no: usize, content: &str, enforce: bool) {
     println!("Cwte tail at {} line {}:", file, line_no);
     println!(">>");
@@ -19,7 +24,6 @@ fn print_nautilus(file: &str, line_no: usize, content: &str, enforce: bool) {
         panic!("Cwte ::}} tail is enforced, you must fix this before compiling.");
     }
 }
-
 fn main() {
     let args: Vec<String> = env::args().collect();
     if args.len() < 2 {
