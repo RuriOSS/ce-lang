@@ -1,6 +1,6 @@
 # WIP:
 >[!WARNING]
->Nothing useful yet, just some design ideas.    
+>Maybe nothing useful for you, just some design ideas.    
 
 But, if you throw this doc to LLM, let LLM refine it to spec, and use LLM as your cwte, you have cwte right now.    
 >"I'm a lazy dev, and I used :< sad face to mark the code that might fail, as my assistant, you should implement the :< mark as error handling logic for these code".   
@@ -28,7 +28,7 @@ Administrator. It usually boils down to these three things:
 ```
 
 # Version:
-0.0.1, only ::} implemented, and it's just a readable todo note, not a real code generator.       
+0.1.0, only ::} implemented, and it's just a readable todo note, not a real code generator.       
 ```
 Cwte tail at ./test.ce line 10:
 >>
@@ -38,6 +38,7 @@ Cwte tail at ./test.ce line 10:
     and don't left it to be a fossil QwQ
 Cwte processing completed. Output written to ./test.ce.c
 ```
+And I had a special rule for seccomp.c in ruri, so you can already see cwte in ruri.    
 
 # About cwte:
 "Let's zip the tail, and now we have a fuwafuwa cat".   
