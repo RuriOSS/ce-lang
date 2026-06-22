@@ -139,6 +139,8 @@ In one word, cwte makes a zipped error handling in C, and it's kawaii.
 
 .hce should only contain the three simple commands, and other definations, like `#define panic()`, `#define log()`, and `typedef` should be in .ce or your .h, as .hce is just `happy c ending/handle c error` delclaration file.    
 # cwte implementation:
+>"Ohhhhh, memfd, silver bullet for saving data and IPC, so cool, so leeme cook."
+
 cwte generator will be a fully memfd-based immutable artifact pipeline ~~(so fd pipeline is also fp)~~ design, we use memfd to save each layer, and make it immutable to the next layer, and each layer will only act on one feature, without other side effects to the generated code.    
 As the performance is always the tail, we should never let the tail wag the cat, so we can have a clear and trackable code generation process, and it's also easy to debug.    
 No Zero-Copy, no Copy-On-Write, no in-place modification, just a simple and clear pipeline. Stable and simple is the only goal.    
