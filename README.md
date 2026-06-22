@@ -151,6 +151,10 @@ We will use linux fd graph to implement:
 - Traceability: you can always check the content of each memfd, and see how the code evolves step by step.
 - Observability: when panic, just dump the fd graph in shell, and you can see what's the last layer that caused the problem.
 
+In security model:
+- Least privilege: each layer can only have one lower layer to read, and one upper layer to write.    
+- Zero trust: we never assume any of the layers is correct, so we make the chain fully auditable and traceable.     
+
 Rust users unhappy, fp users unhappy, but me happy, so leeme cook.      
 
 # cwte design goals:
