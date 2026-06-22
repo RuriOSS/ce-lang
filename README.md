@@ -131,6 +131,15 @@ In one word, cwte makes a zipped error handling in C, and it's kawaii.
 cwte generator will be a fully immutable artifact pipeline (a bit like fp) design, we use memfd to save each layer, and make it immutable to the next layer, and each layer will only act on one feature, without other side effects to the generated code.    
 As the performance is always the tail, we should never let the tail wag the cat, so we can have a clear and trackable code generation process, and it's also easy to debug.    
 No Zero-Copy, no Copy-On-Write, no in-place modification, just a simple and clear pipeline. Stable and simple is the only goal.    
+We will use linux fd graph to implement:
+- Layered structure: each layer will read from the last layer's memfd, and write to a new memfd, and pass it to the next layer.
+- Immutability: each memfd will be read-only after it's written.
+- Side-effect ultra free: you cannot write a ro memfd anyway, as your kernel will definitely scream.
+- Traceability: you can always check the content of each memfd, and see how the code evolves step by step.
+- Observability: when panic, just dump the fd graph in shell, and you can see what's the last layer that caused the problem.
+
+Rust users unhappy, fp users unhappy, but me happy, so leeme cook.      
+
 # cwte design goals:
 ```c
 // Will call panic() if open returns < 0
