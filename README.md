@@ -68,7 +68,7 @@ The tail should never wag the cat also means `tail` command should not call `|ca
   - If cwte wrote the wrong code, the dev should scream. 
   - Always be ready to fire cwte, and make a LLM code regen instead.
   - Cwte should NEVER be a compile-time dependency for released code.
-  - Never assume anything, your cat's tail can make your cook fail.    
+  - Never assume anything, your cat's tail can also make you copy-fail.    
 
 # Project structure:
 A cwte project should be like:
