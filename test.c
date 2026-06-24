@@ -1,0 +1,13 @@
+#[[ce_use("test.hce")]]
+#include <stdio.h>
+int f()
+{
+	return 0;
+}
+int main()
+{
+	f()
+		: < ;
+	t();
+	t();
+}
