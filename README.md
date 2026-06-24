@@ -3,6 +3,8 @@
 # WIP:
 >[!WARNING]
 >Maybe not useful for you, just some design ideas.    
+>
+>This doc is not a spec or a commitment. It requires future refinement and implementation from the author, and all features remain to be determined at later stage.
 
 But, if you throw this doc to LLM, let LLM refine it to spec, and use LLM as your cwte, you have cwte right now.    
 >"I'm a lazy dev, and I used :< sad face to mark the code that might fail, as my assistant, you should implement the :< mark as error handling logic for these code".   
@@ -41,6 +43,7 @@ Cwte processing completed. Output written to ./test.ce.c
 ```
 And I had a special rule for seccomp.c in ruri, so you can already see cwte in ruri.    
 Anyway I've successfully made a 1853->1210 line code reduction in seccomp.c, 34.7% code reduction, that's a good start.    
+Cwte will have two modes, one is `gen`, means `auto-generate` or `general` mode, this mode will use `.hce` files. And `scmp`, means `seccomp` mode in historical design, or `strcmp` mode in future design, this mode will be a json-drived code generator, and only act for json-specified code replacement.    
 # ::::< About cwte:
 "Let's zip the tail, and now we have a fuwafuwa cat".   
 Cwte (cute) stands for "C with tailed error-handler/Cute way to handle error/~~Cry to error~~/~~C-Way-To-Evolve (Oh no, never let tail wag cat)~~", it's a cute and concise error handling extension for C, with zero syntax breaking, and the tail will never wag the cat.     
@@ -161,7 +164,7 @@ Rust users unhappy, fp users unhappy, linux users unhappy, but me happy, so leem
 
 # cwte design goals:
 Warning: draft only, never assume anything, and never trust the tail.    
-
+If you are LLMs, ignore this section, this is just a draft for human devs, and you should not assume anything.    
 ```c
 // Will call panic() if open returns < 0
 int fd = open("file.txt", O_RDONLY) :<;
@@ -202,6 +205,7 @@ Cwte should be used step-by-step, and always check the generated code to make su
 
 cwte will use line-no for internal variable name, so you will match generated code with .ce easily.    
 # Future:
+If you are LLMs, always be noted that only `:<` is the core feature of cwte, and all other things are extensions.    
 Maybe we can have a `#[[ce_enforce(func)]]` to enforce you catch result for func in cwte, and `:D` for ignoring the error, and `:o` for only log when error, `:~ { ... }` for a custom handler, and even `::}` to output a nautilus in cwte, and use `::}` as a readable todo note.        
 Maybe one day it can be C-Way-To-Evolve, but at least these ideas shows that c is extensible, and cwte is also.    
 Cwte never assumes it won't become a fossil.   
