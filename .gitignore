@@ -2,3 +2,4 @@
 /cwte
 *.ce.c
 seccomp*
+*.cei

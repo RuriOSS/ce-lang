@@ -1,3 +1,6 @@
+#[cfg(debug_assertions)]
+use crate::debug;
+use crate::lineno;
 use colored::Colorize;
 use rustix::fs::{MemfdFlags, memfd_create};
 use rustix::fs::{SealFlags, fcntl_add_seals};
@@ -40,7 +43,8 @@ pub fn scmp_layer(mut input: File, file: &str) -> File {
         if line.contains(":<") {
             // Replace ::} with empty string, and write the line to the output file.
             let fixed = line.replace(":<", "");
-            writeln!(mfd_file, "res={}", fixed).expect("Failed to write to file");
+            writeln!(mfd_file, "res={}", lineno::erase_line_no_mark(&fixed))
+                .expect("Failed to write to file");
             writeln!(
                 mfd_file,
                 "ruri_check_seccomp_ret(res, container->no_warnings);"
@@ -54,6 +58,12 @@ pub fn scmp_layer(mut input: File, file: &str) -> File {
     // Make the memfd immutable to prevent further modification.
     mfd_file.sync_all().expect("Failed to sync memfd");
     fcntl_add_seals(mfd_file.as_fd(), SealFlags::WRITE).expect("Failed to add seals to memfd");
+    // For debugging, dump the memfd content to a file.
+    #[cfg(debug_assertions)]
+    debug::cwte_dump(
+        mfd_file.try_clone().expect("Failed to clone memfd"),
+        "scmp_layer.cei",
+    );
     // Return the memfd file for further processing.
     mfd_file
 }

@@ -1,4 +1,6 @@
 //use colored::*;
+#[cfg(debug_assertions)]
+use crate::debug;
 use rustix::fs::{MemfdFlags, memfd_create};
 use rustix::fs::{SealFlags, fcntl_add_seals};
 use std::fs;
@@ -36,6 +38,12 @@ pub fn prepare_layer(mut input: File) -> File {
     // Make the memfd immutable to prevent further modification.
     mfd_file.sync_all().expect("Failed to sync memfd");
     fcntl_add_seals(mfd_file.as_fd(), SealFlags::WRITE).expect("Failed to add seals to memfd");
+    // For debugging, dump the memfd content to a file.
+    #[cfg(debug_assertions)]
+    debug::cwte_dump(
+        mfd_file.try_clone().expect("Failed to clone memfd"),
+        "prepare_layer.cei",
+    );
     // Return the memfd file for further processing.
     mfd_file
 }
@@ -80,6 +88,12 @@ pub fn final_layer(mut input: File) -> File {
     // Make the memfd immutable to prevent further modification.
     mfd_file.sync_all().expect("Failed to sync memfd");
     fcntl_add_seals(mfd_file.as_fd(), SealFlags::WRITE).expect("Failed to add seals to memfd");
+    // For debugging, dump the memfd content to a file.
+    #[cfg(debug_assertions)]
+    debug::cwte_dump(
+        mfd_file.try_clone().expect("Failed to clone memfd"),
+        "final_layer.cei",
+    );
     // Return the memfd file for further processing.
     mfd_file
 }
