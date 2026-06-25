@@ -12,9 +12,21 @@ But, if you throw this doc to LLM, let LLMs refine it to spec, and use LLM as yo
 
 Or just fork this repo, and implement yourself, cwte and `:<` shouldn't be my own patent, and I have no time for it, I just want to have an ice cream.     
 And, the real cwte-generator will just be a dev-stage-only code generator for ruri. It will not act on other unnecessary features I will not use it in my code.     
-# Warning:
-As cwte can bomb everything, it should be extremely careful to use.     
+# ::::< Ascii logo:
 ```
+         _-''''-._
+       /`          `.
+      /   .,~~~,     \
+     |   /       \    |
+     |   |   :>.,/    |
+     \   \       ,___/::<
+     `.   "-----"   /:::::<
+       `.          /:::::::<
+         '-.____. /::::::::::<
+
+"Abstraction turns reality into a black box."
+"When the black box springs a leak, out comes Cthulhu."
+
 We trust you have received the usual lecture from cwte project.
 It usually boils down to these three things:
 
@@ -249,28 +261,6 @@ Maybe we can have a `#[[ce_enforce(func)]]` to enforce you catch result for func
 Maybe one day it can be C-Way-To-Evolve, but at least these ideas shows that c is extensible, and cwte is also.    
 Cwte never assumes it won't become a fossil.   
 "But if we have to evolve, is there a trackable way?"    
-# ::::< Ascii logo:
-```
-         _-''''-._
-       /`          `.
-      /   .,~~~,     \
-     |   /       \    |
-     |   |   :>.,/    |
-     \   \       ,___/::<
-     `.   "-----"   /:::::<
-       `.          /:::::::<
-         '-.____. /::::::::::<
-
-"Abstraction turns reality into a black box."
-"When the black box springs a leak, out comes Cthulhu."
-
-We trust you have received the usual lecture from cwte project.
-It usually boils down to these three things:
-
-    #1) The tail should never wag the cat.
-    #2) Your cat's tail can also make you copy-fail.
-    #3) Everything will become a fossil, nothing's absolutely evolved.
-```
 
 <p align="center">柔らかな皮膚しかない理由は</p>
 <p align="center">人が人の傷みを聴くためだ</p>
