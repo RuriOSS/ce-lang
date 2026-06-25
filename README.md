@@ -248,7 +248,37 @@ int fd_4 = open("file4.txt", O_RDONLY) :<
 // Just add a default log handler for open, will be triggered even fail.
 int fd_5 = open("file5.txt", O_RDONLY) :>;
 ```
+This can be translated to C code like:
+```c
+int fd = open("file.txt", O_RDONLY);
+if(fd < 0) {
+    panic(...);
+}
 
+int fd_2 = open("file2.txt", O_RDONLY);
+if(fd_2 < 0) {
+    panic(...);
+} else {
+    log(...);
+}
+
+int fd_3 = open("file3.txt", O_RDONLY);
+if(fd_3 < 0) {
+    printf("Panic in open with file3.txt\n");
+    exit(1);
+} else {
+    printf("Log in open with file3.txt\n");
+}
+
+int fd_4 = open("file4.txt", O_RDONLY);
+if(fd_4 < 0) {
+    printf("Panic in open with file4.txt\n");
+    exit(1);
+} else {
+    log(...);
+}
+```
+And I'll do more refinement to make sure it's deterministica transformation.
 # Note:  
 cwte just implements `:<` and `:>`, `and #[[ce_foo()]]`, the rest is just C code, and every cwte feature will be translated to C code, You debug/run the generated C code, not the cwte code.   
 #[[ce_reg()]] is enforced, or ce will not know how to handle the error.        
