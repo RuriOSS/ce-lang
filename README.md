@@ -7,11 +7,11 @@
 >
 >This doc is not a spec or a commitment. It requires future refinement and implementation from the author, and all features remain to be determined at later stage.
 
-But, if you throw this doc to LLM, let LLMs refine it to spec, and use LLM as your cwte, you have cwte right now.    
+But, if you throw this doc to LLM, let LLMs refine it to spec, and use LLM as your cwte tail, you have cwte right now.    
 >"I'm a lazy dev, and I used :< sad face to mark the code that might fail, as my assistant, you should implement the :< mark as error handling logic for these code".   
 
-Or just fork this repo, and implement yourself, cwte and `:<` shouldn't be my own patent, and I have no time for it, I just want to have an ice cream.     
-And, the real cwte-generator will just be a dev-stage-only code generator for ruri. It will not act on other unnecessary features I will not use it in my code.     
+Or just fork this repo, and implement yourself :>
+And, the real cwte will just be a dev-stage-only code generator for ruri. Maybe I will not act on other unnecessary features not useful for ruri.         
 # ::::< Ascii logo:
 ```
          _-''''-._
@@ -35,7 +35,7 @@ It usually boils down to these three things:
     #3) Everything will become a fossil, nothing's absolutely evolved.
 ```
 
-# Version:
+# ::::< Version:
 0.1.0, only general `::}` implemented, and it's just a readable todo note, not a real code generator.       
 ```
 Cwte tail at ./test.ce line 10:
@@ -50,6 +50,7 @@ I hope I'm just a cute tail ::::<
 ```
 And I had a special rule for seccomp.c in ruri, so you can already see cwte in ruri.    
 Anyway I've successfully made a 1853->1210 line code reduction in seccomp.c, 34.7% code reduction, that's a good start.    
+
 Cwte will have two modes, one is `gen`, means `auto-generate` or `general` mode, this mode will use `.hce` files. And `scmp`, means `seccomp` mode in historical design, or `strcmp` mode in future design, this mode will be a json-drived code generator, and only act for json-specified code replacement.    
 # ::::< About cwte:
 "Let's zip the tail, and now we have a fuwafuwa cat".   
@@ -130,8 +131,11 @@ project
     ├── foo.ce // Cwte code. For reading and developing.
     └── foo.hce // Cwte definition, for registering func type and handler.
 ```
-
-# Why cwte:
+# ::::< Note:  
+You can use _CE_DFT for `:>` and _CE_PAN for `:<`, just recover with one `sed`, so your IDE and clang-format will not scream at it. 
+For `foo() :<, :>`, maybe your IDE will scream anyway, although these code are less in real-world case.    
+Cwte should be used step-by-step, and always check the generated code to make sure it's what you want. If it will be more ugly, immediately make a ctrl-z in your ide and rollback to the c way, we should never let the tail wag the cat.    
+# ::::< Why cwte:
 In ruri:      
 ```c
 res = seccomp_rule_add(ctx, SCMP_ACT_ALLOW, SCMP_SYS(accept), 0);
@@ -167,12 +171,12 @@ The tail will never wag the cat.
 So cwte will never break c syntax, except the old `:>` as `]` design.   
 But as cwte will translate .ce to c, and if you only use `:>` as happy face in .ce, that's fine.    
 In one word, cwte makes a zipped error handling in C, and it's kawaii.      
-# Why the `:<`:
+# ::::< Why `:<` mark:
 - Cute and readable: it's like a sad face.    
 - Zero syntax breaking: :< never affects C grammar.    
 - Explicit invalid-stat: it's illegal, if you leave a `:<`, `:>` or `]` after a function call, your compiler will definitely scream.    
 - Enforced pre-compile code generation and error handling: `:<` is not a todo comment, but it's easier to be done. With LLM or cwte.    
-# The .hce header:
+# ::::< The .hce header:
 .hce stands for `happy c ending/handle c error`, it's just a kv-map to register error expr and handler for funcs. maybe we can also have standard hce conf like posix.hce.      
 ```c
 // Register function type and failure condition
@@ -187,15 +191,15 @@ In one word, cwte makes a zipped error handling in C, and it's kawaii.
 #[[ce_pan(open, panic)]]
 #[[ce_dft(open, log)]]
 ```
-
+Note: `#[[ce_reg()]]` or `scmp data` is enforced, or ce will not know how to handle the error.        
+Note: cwte will use line-number for internal variable name, so you can match generated code with .ce easily.    
+Maybe we can also have a `#[[ce_enforce(func)]]` to enforce you catch result for func in cwte, and `:D` for ignoring the error anyway, and `:o` for only log when error.    
 .hce should only contain the three simple commands, and other definations, like `#define panic()`, `#define log()`, and `typedef` should be in .ce or your .h, as .hce is just `happy c ending/handle c error` delclaration file.    
 # ::::< cwte implementation:
 >[!WARNING]
->Cwte should and will always be a tail, I'm the developer of ruri, not a rust developer.
+>I'm the developer of ruri, not a rust developer.
 >
 >It should be stable and simple, even not perfect at all, and with many bullshit hacks.
->
->Don't ask me why a f**king source-to-source code generator use so much kernel features, I had tons of syscalls in ruri, they are not ice cream at all.
 >
 >I didn't learn rust at all, so I also didn't trust thc code I/LLMs wrote. Each layer of cwte should be explicit and traceable, so I can always check the if the gray box give me the right code. 
 
@@ -222,6 +226,7 @@ Rust users unhappy, fp users unhappy, linux users unhappy, but me happy, so leem
 
 # cwte design goals:
 Warning: draft only, never assume anything, and never trust the tail.    
+Warning: just some ideas, we will only focuse on `:<` now.    
 ```c
 // Will call panic() if open returns < 0
 int fd = open("file.txt", O_RDONLY) :<;
@@ -251,6 +256,15 @@ int fd_4 = open("file4.txt", O_RDONLY) :<
 
 // Just add a default log handler for open, will be triggered even fail.
 int fd_5 = open("file5.txt", O_RDONLY) :>;
+
+// Only trigger log when fail.
+int fd_6 = open("file6.txt", O_RDONLY) :o;
+
+// Ignore error handling forever.
+int fd_7 = open("file7.txt", O_RDONLY) :D;
+
+// Implement error handler later.
+int fd_8 = open("file7.txt", O_RDONLY) ::};
 ```
 This can be translated to C code like:
 ```c
@@ -281,18 +295,22 @@ if(fd_4 < 0) {
 } else {
     log(...);
 }
-```
-And I'll do more refinement to make sure it's deterministica transformation.
-# Note:  
-cwte just implements `:<` and `:>`, `and #[[ce_foo()]]`, the rest is just C code, and every cwte feature will be translated to C code, You debug/run the generated C code, not the cwte code.   
-#[[ce_reg()]] is enforced, or ce will not know how to handle the error.        
-And, there will be many ubs, so always do a diff-check between .ce and .c, and make sure the generated code is what you want.    
-You can use _CE_DFT for `:>` and _CE_PAN for `:<`, just recover with one `sed`, so your IDE and clang-format will not scream at it. But for `foo() :<, :>`, your IDE will scream anyway, although these code are less in real-world case.    
-Cwte should be used step-by-step, and always check the generated code to make sure it's what you want. If it will be more ugly, immediately make a ctrl-z in your ide and rollback to the c way, we should never let the tail wag the cat.    
 
-cwte will use line-number for internal variable name, so you will match generated code with .ce easily.    
-# Future:
-Maybe we can have a `#[[ce_enforce(func)]]` to enforce you catch result for func in cwte, and `:D` for ignoring the error, and `:o` for only log when error, `:~ { ... }` for a custom handler, and even `::}` to output a nautilus in cwte, and use `::}` as a readable todo note.        
+int fd_5 = open("file5.txt", O_RDONLY);
+log(...);
+
+int fd_6 = open("file6.txt", O_RDONLY);
+if(fd_6 < 0) {
+    log(...);
+}
+
+int fd_7 = open("file7.txt", O_RDONLY);
+int fd_8 = open("file7.txt", O_RDONLY);
+```
+Note that only `:<` is the core feature we need to focus on.
+And I'll do more refinement to make sure it's deterministica transformation.
+
+# ::::< In the end:
 Maybe one day it can be C-Way-To-Evolve, but at least these ideas shows that c is extensible, and cwte is also.    
 Cwte never assumes it won't become a fossil.   
 "But if we have to evolve, is there a trackable way?"    
