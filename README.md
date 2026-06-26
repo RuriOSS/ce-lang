@@ -66,21 +66,20 @@ I just hope it can save some time, so I can have an ice cream.
 The tail should never wag the cat, this means sad path handler should never pollute the core logic, and cwte will also never pollute other c code.     
 The tail should never wag the cat also means `tail` command should not call `|cat` :D   
 # ::::< The philosophy:
-- Cwte has no super cow powers.    
+- Cwte is never a silver bullet.   
 - Cwte is a postfix, a tail, but not the cat (C-lang).    
 - The tail can/should/will/must never wag the cat.
 - Cwte is garbage-in-garbage-out, if the given rules are even wrong, cwte cannot be correct.
 - Cwte should be reversible, if you don't like, thow it away and rollback to c.
-- Cwte should not spread any bullshit, or human auditor should fire it.
+- Human auditor should be ready to scream or even just fire cwte.
 - We are c users, not cwte users.    
 - Cwte is dangerous, the tail can make everything cooked, so:
   - Always check the generated code.
   - Always make a backup to last working code.
   - Always backup cwte itself.
   - Always check where's your cat.
-  - If cwte wrote the wrong code, the dev should scream. 
   - Always be ready to fire cwte, and make a LLM code regen instead.
-  - Cwte should NEVER be a compile-time dependency for released code.
+- Cwte should NEVER be a compile-time dependency for released code.
 
 # ::::< The goal:
 ```
@@ -112,7 +111,7 @@ Anyway, trust the c code, not the cwte code and cwte-generator.
 There's no silver bullet in C programming.    
 Cwte is never a .unwrap() or even ownership analyzer, as C also has never provided a way to do that.    
 If you have 15 same open() with same error handling, cwte is good.    
-If you have just 1 open(), and `ahhh, cute tail, leeme cook`, cwte is not good.    
+If you have just 1 open(), and `Ahhh, cute tail, kawaii! we need it!`, cwte is not good.    
 If there's no enough repetition, there's no tail to zip.    
 If you expect something like:    
 ```c
@@ -122,7 +121,7 @@ Then remove your brain. The only way to implement this is to use gnu extension `
 And the generated code will be unreadable and unauditable after that, considering the error handler is a dangerous side-effect, as an accuountable tail, cwte should never try that.        
 And if you expect complex AST parsing, cwte might not do that. More complex features mean more complex bugs, and you will get many weird bugs if you don't have enough PLT knowledge and a good test coverage.    
 # ::::< Project structure:
-A cwte project should be like:
+A suggested cwte project should be like:
 ```
 project
 ├── src // For C code, the ONLY code for testing and publishing.

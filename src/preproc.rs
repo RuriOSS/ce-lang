@@ -14,6 +14,13 @@ pub fn clang_format_prepare_layer(mut input: File) -> File {
      * clang-format the input file, and return the output file.
      * So that we will have everything in a fixed format,
      * to bypass AST parsing.
+     * _CE_PAN :panic when error
+     * _CE_HAP :happy path when no error
+     * _CE_NUS :just a todo mark
+     * _CE_LAF :ignore error handler forever
+     * _CE_LWE :log when error
+     * _CE_DFM :do that for me, an AI-native mark
+     *
      */
     // Dump input to a temporary file clang_format_prepare_layer_PID.cei
     let temp_file_path = format!(
@@ -33,12 +40,21 @@ pub fn clang_format_prepare_layer(mut input: File) -> File {
         .expect("Failed to write to temporary file");
     // Run the following command:
     // sed -i "s/:</_CE_PAN/g" clang_format_prepare_layer.cei
+    // sed -i "s/:>/_CE_HAP/g" clang_format_prepare_layer.cei
     // sed -i "s/::}/_CE_NUS/g" clang_format_prepare_layer.cei
     // sed -i "s/:D/_CE_LAF/g" clang_format_prepare_layer.cei
+    // sed -i "s/:o/_CE_LWE/g" clang_format_prepare_layer.cei
+    // sed -i "s/:3/_CE_DFM/g" clang_format_prepare_layer.cei
     // clang-format -i --assume-filename=test.c clang_format_prepare_layer.cei
     Command::new("sed")
         .arg("-i")
         .arg("s/:</_CE_PAN/g")
+        .arg(&temp_file_path)
+        .status()
+        .expect("Failed to run sed command");
+    Command::new("sed")
+        .arg("-i")
+        .arg("s/:>/_CE_HAP/g")
         .arg(&temp_file_path)
         .status()
         .expect("Failed to run sed command");
@@ -51,6 +67,18 @@ pub fn clang_format_prepare_layer(mut input: File) -> File {
     Command::new("sed")
         .arg("-i")
         .arg("s/:D/_CE_LAF/g")
+        .arg(&temp_file_path)
+        .status()
+        .expect("Failed to run sed command");
+    Command::new("sed")
+        .arg("-i")
+        .arg("s/:o/_CE_LWE/g")
+        .arg(&temp_file_path)
+        .status()
+        .expect("Failed to run sed command");
+    Command::new("sed")
+        .arg("-i")
+        .arg("s/:3/_CE_DFM/g")
         .arg(&temp_file_path)
         .status()
         .expect("Failed to run sed command");
@@ -69,6 +97,12 @@ pub fn clang_format_prepare_layer(mut input: File) -> File {
         .expect("Failed to run sed command");
     Command::new("sed")
         .arg("-i")
+        .arg("s/_CE_HAP/:>/g")
+        .arg(&temp_file_path)
+        .status()
+        .expect("Failed to run sed command");
+    Command::new("sed")
+        .arg("-i")
         .arg("s/_CE_NUS/::}/g")
         .arg(&temp_file_path)
         .status()
@@ -76,6 +110,18 @@ pub fn clang_format_prepare_layer(mut input: File) -> File {
     Command::new("sed")
         .arg("-i")
         .arg("s/_CE_LAF/:D/g")
+        .arg(&temp_file_path)
+        .status()
+        .expect("Failed to run sed command");
+    Command::new("sed")
+        .arg("-i")
+        .arg("s/_CE_LWE/:o/g")
+        .arg(&temp_file_path)
+        .status()
+        .expect("Failed to run sed command");
+    Command::new("sed")
+        .arg("-i")
+        .arg("s/_CE_DFM/:3/g")
         .arg(&temp_file_path)
         .status()
         .expect("Failed to run sed command");
