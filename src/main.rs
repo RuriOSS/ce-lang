@@ -63,7 +63,7 @@ fn cwte_generator(input: &str, output: &str) {
     );
     println!(
         "{}{}",
-        "I hope I'm just a cute tail ".green(),
+        "I hope I'm just a helpful tail ".green(),
         "::::<".yellow()
     );
 }
@@ -97,7 +97,7 @@ fn scmp_generator(input: &str, output: &str) {
     );
     println!(
         "{}{}",
-        "I hope I'm just a cute tail ".green(),
+        "I hope I'm just a helpful tail ".green(),
         "::::<".yellow()
     );
 }
