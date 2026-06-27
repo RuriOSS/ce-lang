@@ -61,6 +61,46 @@ We will just have a new sad face `:<` for error handling, and `#[[ce_foo()]]` fo
 These syntax will be translated to C code, you can use cwte for error handling, cwte-generator will transform it to C, and you compile/run/debug the generated C code.      
 In short, cwte is just for zipping complex unhappy path logic, and make it more readable.    
 I just hope it can save some time, so I can have an ice cream.    
+# ::::< Why cwte:
+In ruri:      
+```c
+res = seccomp_rule_add(ctx, SCMP_ACT_ALLOW, SCMP_SYS(accept), 0);
+ruri_check_seccomp_ret(res, container->no_warnings);
+res = seccomp_rule_add(ctx, SCMP_ACT_ALLOW, SCMP_SYS(accept4), 0);
+ruri_check_seccomp_ret(res, container->no_warnings);
+res = seccomp_rule_add(ctx, SCMP_ACT_ALLOW, SCMP_SYS(access), 0);
+ruri_check_seccomp_ret(res, container->no_warnings);
+```
+Too ugly you see? I scream, eye scream, my small screen scream, my ADHD scream, my LLM scream, all scream.         
+seccomp_rule_add() uses va_args, so if you don't use these complex code, you can only use a macro. But in cross-arch CI, it will bomb to TLE, as the pre-compile expansion performance of macro is not good, and qemu is slow.      
+So, I want a:     
+```c
+#[[ce_reg(seccomp_rule_add, int, _<0)]]
+```
+Then:   
+```c
+seccomp_rule_add(ctx, SCMP_ACT_ALLOW, SCMP_SYS(accept), 0) :<;
+seccomp_rule_add(ctx, SCMP_ACT_ALLOW, SCMP_SYS(accept4), 0) :<;
+seccomp_rule_add(ctx, SCMP_ACT_ALLOW, SCMP_SYS(access), 0) :<;
+```
+Now we have ice cream, but no more `I scream`.   
+Dev happy, readers happy, PRs happy, LLMs happy (with prompt), all happy.   
+It will also be very useful in educational case, as you can use a `:<` to tell people "you should handle this error, but it's not the core logic for our code", and your example code will be more concise and readable.    
+And the above code can be auto expanded back, with zero-diff:    
+```c
+res = seccomp_rule_add(ctx, SCMP_ACT_ALLOW, SCMP_SYS(accept), 0);
+ruri_check_seccomp_ret(res, container->no_warnings);
+```
+So that's cwte, a cute tail.    
+The tail will never wag the cat.    
+So cwte will never break c syntax, except the old `:>` as `]` design.   
+But as cwte will translate .ce to c, and if you only use `:>` as happy face in .ce, that's fine.    
+In one word, cwte makes a zipped error handling in C, and it's kawaii.      
+# ::::< Why `:<` mark:
+- Cute and readable: it's like a sad face.    
+- Zero syntax breaking: :< never affects C grammar.    
+- Explicit invalid-stat: it's illegal, if you leave a `:<`, `:>` or `]` after a function call, your compiler will definitely scream.    
+- Enforced pre-compile code generation and error handling: `:<` is not a todo comment, but it's easier to be done. With LLM or cwte.    
 # ::::< The core:
 `:<` Is the only core feature, it's a tail after func call, for error handling.     
 The tail should never wag the cat, this means sad path handler should never pollute the core logic, and cwte will also never pollute other c code.     
@@ -131,50 +171,9 @@ project
     └── foo.hce // Cwte definition, for registering func type and handler.
 ```
 # ::::< Note:  
-You can use _CE_DFT for `:>` and _CE_PAN for `:<`, just recover with one `sed`, so your IDE and clang-format will not scream at it. 
+You can use _CE_HAP for `:>` and _CE_SAD for `:<`, just recover with one `sed`, so your IDE and clang-format will not scream at it. 
 For `foo() :<, :>`, maybe your IDE will scream anyway, although these code are less in real-world case.    
 Cwte should be used step-by-step, and always check the generated code to make sure it's what you want. If it will be more ugly, immediately make a ctrl-z in your ide and rollback to the c way, we should never let the tail wag the cat.    
-# ::::< Why cwte:
-In ruri:      
-```c
-res = seccomp_rule_add(ctx, SCMP_ACT_ALLOW, SCMP_SYS(accept), 0);
-ruri_check_seccomp_ret(res, container->no_warnings);
-res = seccomp_rule_add(ctx, SCMP_ACT_ALLOW, SCMP_SYS(accept4), 0);
-ruri_check_seccomp_ret(res, container->no_warnings);
-res = seccomp_rule_add(ctx, SCMP_ACT_ALLOW, SCMP_SYS(access), 0);
-ruri_check_seccomp_ret(res, container->no_warnings);
-```
-Too ugly you see? I scream, eye scream, my small screen scream, my ADHD scream, my LLM scream, all scream.         
-seccomp_rule_add() uses va_args, so if you don't use these complex code, you can only use a macro. But in cross-arch CI, it will bomb to TLE, as the pre-compile expansion performance of macro is not good, and qemu is slow.      
-So, I want a:     
-```c
-#[[ce_reg(seccomp_rule_add, int, _<0)]]
-```
-Then:   
-```c
-seccomp_rule_add(ctx, SCMP_ACT_ALLOW, SCMP_SYS(accept), 0) :<;
-seccomp_rule_add(ctx, SCMP_ACT_ALLOW, SCMP_SYS(accept4), 0) :<;
-seccomp_rule_add(ctx, SCMP_ACT_ALLOW, SCMP_SYS(access), 0) :<;
-```
-Now we have ice cream, but no more `I scream`.   
-Dev happy, readers happy, PRs happy, LLMs happy (with prompt), all happy.   
-It will also be very useful in educational case, as you can use a `:<` to tell people "you should handle this error, but it's not the core logic for our code", and your example code will be more concise and readable.    
-And the above code will be auto expanded to code like this:    
-```c
-if(seccomp_rule_add(ctx, SCMP_ACT_ALLOW, SCMP_SYS(accept), 0) != 0) {
-    warning("seccomp_rule_add", __FILE__, __LINE__, res, errno);
-}
-```
-So that's cwte, a cute tail.    
-The tail will never wag the cat.    
-So cwte will never break c syntax, except the old `:>` as `]` design.   
-But as cwte will translate .ce to c, and if you only use `:>` as happy face in .ce, that's fine.    
-In one word, cwte makes a zipped error handling in C, and it's kawaii.      
-# ::::< Why `:<` mark:
-- Cute and readable: it's like a sad face.    
-- Zero syntax breaking: :< never affects C grammar.    
-- Explicit invalid-stat: it's illegal, if you leave a `:<`, `:>` or `]` after a function call, your compiler will definitely scream.    
-- Enforced pre-compile code generation and error handling: `:<` is not a todo comment, but it's easier to be done. With LLM or cwte.    
 # ::::< The .hce header:
 .hce stands for `happy c ending/handle c error`, it's just a kv-map to register error expr and handler for funcs. maybe we can also have standard hce conf like posix.hce.      
 ```c
@@ -228,7 +227,7 @@ Warning: draft only, never assume anything, and never trust the tail.
 Warning: just some ideas, we will only focuse on `:<` now.   
 Symbols:     
 ```
-:<  _CE_PAN :panic when error
+:<  _CE_SAD :panic when error
 :>  _CE_HAP :happy path when no error
 :o  _CE_LWE :log when error
 ::} _CE_NUS :just a todo mark

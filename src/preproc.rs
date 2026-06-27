@@ -14,7 +14,7 @@ pub fn clang_format_prepare_layer(mut input: File) -> File {
      * clang-format the input file, and return the output file.
      * So that we will have everything in a fixed format,
      * to bypass AST parsing.
-     * _CE_PAN :panic when error
+     * _CE_SAD :panic when error
      * _CE_HAP :happy path when no error
      * _CE_LWE :log when error
      * _CE_NUS :just a todo mark
@@ -39,7 +39,7 @@ pub fn clang_format_prepare_layer(mut input: File) -> File {
         .write_all(&content)
         .expect("Failed to write to temporary file");
     // Run the following command:
-    // sed -i "s/:</_CE_PAN/g" clang_format_prepare_layer.cei
+    // sed -i "s/:</_CE_SAD/g" clang_format_prepare_layer.cei
     // sed -i "s/:>/_CE_HAP/g" clang_format_prepare_layer.cei
     // sed -i "s/:o/_CE_LWE/g" clang_format_prepare_layer.cei
     // sed -i "s/::}/_CE_NUS/g" clang_format_prepare_layer.cei
@@ -48,7 +48,7 @@ pub fn clang_format_prepare_layer(mut input: File) -> File {
     // clang-format -i --assume-filename=test.c clang_format_prepare_layer.cei
     Command::new("sed")
         .arg("-i")
-        .arg("s/:</_CE_PAN/g")
+        .arg("s/:</_CE_SAD/g")
         .arg(&temp_file_path)
         .status()
         .expect("Failed to run sed command");
@@ -88,10 +88,10 @@ pub fn clang_format_prepare_layer(mut input: File) -> File {
         .arg(&temp_file_path)
         .status()
         .expect("Failed to run clang-format command");
-    // Then sed back the _CE_PAN, _CE_NUS, _CE_LAF to :<, ::}, :D
+    // Then sed back the _CE_SAD, _CE_NUS, _CE_LAF to :<, ::}, :D
     Command::new("sed")
         .arg("-i")
-        .arg("s/_CE_PAN/:</g")
+        .arg("s/_CE_SAD/:</g")
         .arg(&temp_file_path)
         .status()
         .expect("Failed to run sed command");
